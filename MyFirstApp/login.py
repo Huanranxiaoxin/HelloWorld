@@ -28,7 +28,7 @@ def login_go(request):
             red.set_cookie('userinfo',list[0].accountname) # 将用户名写入cookie
             return red # 去重定向页面
         else:
-            message = '账号和密码错误，请重新登录'
+            message = '账号和密码错误，请重新登录吧'
     else:
         # 无数据
         message = '请输入账户和密码'
