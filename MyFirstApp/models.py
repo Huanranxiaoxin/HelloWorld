@@ -9,3 +9,7 @@ class testusers(models.Model):
     password = models.CharField(default='', max_length=20)
     createtime = models.DateTimeField('账号创建日期',auto_now = True)
     idstatus = models.IntegerField(default = 1)
+
+class logs(models.Model):
+    logscontent = models.CharField(default='', max_length = 200)
+    createtime = models.DateTimeField('添加日期',auto_now = True)

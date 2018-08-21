@@ -14,3 +14,15 @@ def add(request,a,b):
 def default(request):
 	key = testusers.objects.all() ## 查询testusers表返回所有数据对象
 	return render(request, 'default.html', {'accountNames': key}) ## 将查询结果返回到模板页面default.html
+
+# 添加1,000,000条数据（测试结果为782秒，每秒1278条）
+def logs_add(request):
+	i = 0
+	while i<1000000:
+		logs.objects.create(logscontent='logs'+str(i))
+		i+=1
+	return HttpResponse(u'写入了'+str(i)+'记录')
+
+def view_logs(request):
+	list = logs.objects.all()
+	return render(request,'logs.html',{'logs':list})

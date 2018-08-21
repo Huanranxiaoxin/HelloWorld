@@ -25,4 +25,6 @@ urlpatterns = [
     path('default/', views.default),
     path('login/',login.login),
     path('login_go/',login.login_go),
+    path('logs_add/', views.logs_add),
+    path('logs/',views.view_logs),
 ]
