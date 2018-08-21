@@ -71,13 +71,15 @@ TEMPLATES = [
     },
 ]
 
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = 'default'
+
 # 设置缓存Memcached
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': [
-            '127.0.0.1:11211',
-        ]
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 

@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from MyFirstApp.models import testusers
 from django.views.decorators import csrf
-from django.views.decorators.cache import cache_page
-
+from django.core.cache import cache
 
 # 登录页面
 def login(request):
@@ -10,6 +9,11 @@ def login(request):
     try:
         cookie_value = request.COOKIES.get('userinfo')  # 读取cookie
         ctx['rlt'] = cookie_value
+        #userinfo = request.session['userinfo']
+        key = 'user_session_'+cookie_value
+        userinfo = cache.get(key)
+        #userinfo = cache.get('user_session_zhenghx')
+        ctx['rlt'] += ',' + userinfo
     except:
         ctx['rlt'] = '请登录'
     return render(request, 'login.html', ctx)
@@ -23,6 +27,10 @@ def login_go(request):
         list = testusers.objects.filter(
             accountname=request.POST['accountName'], password=request.POST['password'])
         if list:
+            #request.session['userinfo'] = str(list[0].createtime)
+            key = 'user_session_'+str(list[0].accountname)
+            cache.set(key, str(list[0].id))
+            #cache.set('user_session_zhenghx','helloworld')
             red = redirect('/login/')  # 登录成功，重新定向
             red.set_cookie('userinfo', list[0].accountname)  # 将用户名写入cookie
             return red  # 去重定向页面
